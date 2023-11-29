@@ -9,8 +9,10 @@ namespace InterviewTest
 {
     public class Program
     {
-        private static readonly OrderRepository orderRepo = new OrderRepository();
-        private static readonly ReturnRepository returnRepo = new ReturnRepository();
+        private static readonly OrderRepository orderTruckRepo = new OrderRepository();
+        private static readonly ReturnRepository returnTruckRepo = new ReturnRepository();
+        private static readonly OrderRepository orderCarRepo = new OrderRepository();
+        private static readonly ReturnRepository returnCarRepo = new ReturnRepository();
 
         static void Main(string[] args)
         {
@@ -58,6 +60,7 @@ namespace InterviewTest
 
             IReturn rga = new Return("TruckAccessoriesReturn123", order);
             rga.AddProduct(order.Products.First());
+            customer.CreateReturn(rga);
 
             ConsoleWriteLineResults(customer);
         }
@@ -80,12 +83,12 @@ namespace InterviewTest
 
         private static ICustomer GetTruckAccessoriesCustomer()
         {
-            return new TruckAccessoriesCustomer(orderRepo, returnRepo);
+            return new TruckAccessoriesCustomer(orderTruckRepo, returnTruckRepo);
         }
 
         private static ICustomer GetCarDealershipCustomer()
         {
-            return new CarDealershipCustomer(orderRepo, returnRepo);
+            return new CarDealershipCustomer(orderCarRepo, returnCarRepo);
         }
 
         private static void ConsoleWriteLineResults(ICustomer customer)
