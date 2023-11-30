@@ -38,33 +38,41 @@ namespace InterviewTest.Customers
         {
             return _returnRepository.Get();
         }
-
+        // Implemented Method
         public float GetTotalSales()
         {
             float total_sales = 0.0F;
+            
+            // Iterates through the list of orders from the order repo
             List<IOrder> order_list = _orderRepository.Get();
             for (var i = 0; i < order_list.Count; i++)
             {
+                // Gets the order and iterates through all the products purchased
                 IOrder order = order_list[i];
                 List<OrderedProduct> prod_list = order.Products;
                 for (var j = 0; j < prod_list.Count; j++) 
                 {
+                    // Sums price of each product
                     IProduct prod =  prod_list[j].Product;
                     total_sales += prod.GetSellingPrice();
                 }
             }
             return total_sales;
         }
-
+        // Implemented Method
         public float GetTotalReturns()
         {
             float total_returns = 0.0F;
+            
+            // Iterates through the list of returns from the return repo
             List<IReturn> return_list = _returnRepository.Get();
             for (var i = 0; i < return_list.Count; i++)
             {
+                // Gets the list of returned products and iterates through them
                 List<ReturnedProduct> returned_prods = return_list[i].ReturnedProducts;
                 for (var j = 0; j < returned_prods.Count; j++)
                 {
+                    // Sums up all returned products
                     OrderedProduct ordered_prod = returned_prods[j].OrderProduct;
                     IProduct prod = ordered_prod.Product;
                     total_returns += prod.GetSellingPrice();
@@ -72,7 +80,7 @@ namespace InterviewTest.Customers
             }
             return total_returns;
         }
-
+        // Implemented Method
         public float GetTotalProfit()
         {
             return GetTotalSales() - GetTotalReturns();
